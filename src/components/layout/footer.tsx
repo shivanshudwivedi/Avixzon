@@ -45,7 +45,7 @@ export function Footer() {
               </li>
               <li className="flex items-center space-x-2">
                 <Phone className="h-4 w-4" />
-                <span>(437) 775 2692 (Canada)</span>
+                <span>(437) 775 2592</span>
               </li>
             </ul>
           </div>
