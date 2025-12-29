@@ -16,15 +16,6 @@ export function Footer() {
             </p>
           </div>
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">Services</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/services" className="hover:text-primary">Air Freight</Link></li>
-              <li><Link href="/services" className="hover:text-primary">Ocean Freight</Link></li>
-              <li><Link href="/services" className="hover:text-primary">Moving Services</Link></li>
-              <li><Link href="/services" className="hover:text-primary">View All Services</Link></li>
-            </ul>
-          </div>
-          <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">Company</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link href="/" className="hover:text-primary">Home</Link></li>
