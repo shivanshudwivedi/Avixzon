@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -17,26 +18,26 @@ export function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-20 items-center justify-between px-4">
+      <div className="container mx-auto flex h-16 sm:h-20 items-center justify-between gap-3 px-4">
         {/* Logo */}
         <motion.div
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.02 }}
           transition={{ type: "spring", stiffness: 400, damping: 10 }}
         >
           <Link href="/" className="flex items-center">
-            <Image 
-              src="/logo2.jpg" 
-              alt="Avixzon Logo" 
-              width={120} 
+            <Image
+              src="/logo2.jpg"
+              alt="Avixzon Logo"
+              width={120}
               height={55}
-              className="h-20 w-auto rounded-full"
+              className="h-14 w-auto sm:h-[4.5rem] rounded-full"
               priority
             />
           </Link>
         </motion.div>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center space-x-8">
+        <div className="hidden md:flex items-center gap-6 lg:gap-8">
           {navLinks.map((link) => (
             <Link
               key={link.name}
@@ -47,16 +48,18 @@ export function Navbar() {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
             </Link>
           ))}
+          <ThemeToggle />
           <Link
             href="/contact"
-            className="inline-flex h-10 items-center justify-center rounded-full bg-primary px-6 py-2 text-base font-medium text-primary-foreground shadow-md transition-all hover:bg-primary/90 hover:shadow-lg hover:scale-105 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+            className="inline-flex h-10 items-center justify-center rounded-full bg-primary px-6 py-2 text-base font-medium text-primary-foreground shadow-md transition-all hover:bg-primary/90 hover:shadow-lg hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50"
           >
             Get a Quote
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="flex items-center md:hidden">
+        {/* Mobile: theme + menu */}
+        <div className="flex items-center gap-1 md:hidden">
+          <ThemeToggle />
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"

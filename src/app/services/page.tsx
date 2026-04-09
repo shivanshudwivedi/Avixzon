@@ -90,30 +90,32 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Header Section */}
-      <div className="relative py-24 md:py-32 bg-primary/5 border-b border-border/50 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
+      <div className="relative py-16 md:py-24 lg:py-32 bg-muted/30 border-b border-border/50 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.06]" />
+        <div className="container mx-auto px-4 relative z-10 text-center space-y-4">
+          <p className="text-sm font-semibold uppercase tracking-widest text-primary">What We Do</p>
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl font-bold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60"
+            transition={{ duration: 0.4 }}
+            className="font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60"
           >
             Our Premium Services
           </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
             className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto"
           >
-            Comprehensive logistics and moving solutions tailored to your needs. 
+            Comprehensive logistics and moving solutions tailored to your needs.
             Experience the Avixzon standard of excellence.
           </motion.p>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 -mt-12 relative z-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="container mx-auto px-4 py-12 md:py-16 lg:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {services.map((service, index) => (
             <motion.div
               key={service.id}
@@ -191,19 +193,20 @@ export default function ServicesPage() {
                                </button>
                              </div>
                              
-                             <div className="prose dark:prose-invert max-w-none">
-                               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+                             <div className="space-y-6">
+                               <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
                                  {s.details}
                                </p>
-                               
-                               <h3 className="text-xl font-semibold mb-4 text-foreground">Key Features</h3>
-                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                 {s.features.map((feature, idx) => (
-                                   <div key={idx} className="flex items-center gap-3 p-3 rounded-lg bg-secondary/50 border border-border/50">
-                                     <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-                                     <span className="font-medium">{feature}</span>
-                                   </div>
-                                 ))}
+                               <div>
+                                 <h3 className="text-lg font-semibold mb-4 text-foreground">Key Features</h3>
+                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                   {s.features.map((feature, idx) => (
+                                     <div key={idx} className="flex items-center gap-3 p-3 rounded-xl bg-muted/60 border border-border/50">
+                                       <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />
+                                       <span className="text-sm font-medium text-foreground">{feature}</span>
+                                     </div>
+                                   ))}
+                                 </div>
                                </div>
                              </div>
                            </div>

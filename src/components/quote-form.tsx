@@ -2,8 +2,8 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { cn } from "@/lib/utils";
+import { quoteFormSchema, type QuoteFormValues } from "@/lib/quote-schema";
 import { CalendarIcon, Truck, MapPin, Mail, Phone, User, Package, ChevronDown, Check } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -13,22 +13,9 @@ import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import * as Popover from "@radix-ui/react-popover";
 
-const formSchema = z.object({
-  fullName: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  phone: z.string().min(10, "Phone number must be at least 10 digits"),
-  pickupAddress: z.string().min(5, "Pickup address is required"),
-  destinationAddress: z.string().min(5, "Destination address is required"),
-  moveDate: z.date().refine((date) => date > new Date(), {
-    message: "Move date must be in the future",
-  }),
-  moveSize: z.string().min(1, "Please select a move size"),
-});
-
-type FormValues = z.infer<typeof formSchema>;
-
 export function QuoteForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -36,18 +23,44 @@ export function QuoteForm() {
     watch,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  } = useForm<QuoteFormValues>({
+    resolver: zodResolver(quoteFormSchema),
+    defaultValues: { website: "" },
   });
   
   const date = watch("moveDate");
   const moveSize = watch("moveSize");
 
-  const onSubmit = async (data: FormValues) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(data);
-    setSubmitted(true);
-    reset();
+  const onSubmit = async (data: QuoteFormValues) => {
+    setSubmitError(null);
+    try {
+      const res = await fetch("/api/quote", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: data.fullName,
+          email: data.email,
+          phone: data.phone,
+          pickupAddress: data.pickupAddress,
+          destinationAddress: data.destinationAddress,
+          moveDate: data.moveDate.toISOString(),
+          moveSize: data.moveSize,
+          website: data.website ?? "",
+        }),
+      });
+      const payload = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        ok?: boolean;
+      };
+      if (!res.ok) {
+        setSubmitError(payload.error ?? "Something went wrong. Please try again.");
+        return;
+      }
+      setSubmitted(true);
+      reset({ website: "" });
+    } catch {
+      setSubmitError("Network error. Check your connection and try again.");
+    }
   };
 
   const inputClasses = "flex h-14 w-full rounded-2xl border border-input bg-background/50 px-4 py-2 pl-12 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-300 hover:border-primary/50 hover:bg-background/80 shadow-sm";
@@ -59,13 +72,13 @@ export function QuoteForm() {
       <motion.div 
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="w-full max-w-4xl mx-auto p-12 bg-card rounded-3xl shadow-2xl border border-border/50 text-center"
+        className="w-full max-w-4xl mx-auto p-6 sm:p-10 md:p-12 bg-card rounded-3xl shadow-2xl border border-border/50 text-center"
       >
-        <div className="w-24 h-24 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-8 animate-bounce">
-          <Truck className="h-12 w-12" />
+        <div className="w-20 h-20 sm:w-24 sm:h-24 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-6 sm:mb-8 motion-safe:animate-bounce">
+          <Truck className="h-10 w-10 sm:h-12 sm:w-12" />
         </div>
-        <h2 className="text-4xl font-bold mb-4">Quote Request Received!</h2>
-        <p className="text-muted-foreground text-xl mb-10 max-w-lg mx-auto">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 font-display">Quote Request Received!</h2>
+        <p className="text-muted-foreground text-base sm:text-lg md:text-xl mb-8 sm:mb-10 max-w-lg mx-auto px-1">
           Thank you for choosing Avixzon. Our team will review your details and send a customized estimate to your email shortly.
         </p>
         <button
@@ -80,9 +93,11 @@ export function QuoteForm() {
 
   return (
     <div className="w-full max-w-6xl mx-auto">
-      <div className="mb-16 text-center">
-        <h2 className="text-5xl font-bold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70 pb-2">Get a Free Quote</h2>
-        <p className="text-muted-foreground text-xl max-w-3xl mx-auto">
+      <div className="mb-10 sm:mb-16 text-center px-1">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70 pb-2 font-display">
+          Get a Free Quote
+        </h2>
+        <p className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-3xl mx-auto">
           Fill out the form below for a fast and accurate estimate. We respect your privacy and will never share your information.
         </p>
       </div>
@@ -138,14 +153,22 @@ export function QuoteForm() {
               </div>
               <div className="text-base opacity-90 bg-white/10 p-6 rounded-xl backdrop-blur-sm">
                 Need immediate assistance? <br />
-                Call us at <span className="font-bold text-xl block mt-2">(555) 123-4567</span>
+                Call us at <span className="font-bold text-xl block mt-2">(437) 775 2592</span>
               </div>
             </div>
           </div>
 
           {/* Form Section */}
           <div className="lg:col-span-3 p-8 md:p-12 lg:p-16">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
+            <form onSubmit={handleSubmit(onSubmit)} className="relative space-y-10">
+              <input
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden
+                className="absolute -left-[9999px] h-0 w-0 opacity-0"
+                {...register("website")}
+              />
               {/* Personal Details */}
               <div className="space-y-8">
                 <h3 className="text-xl font-bold flex items-center text-primary">
@@ -317,14 +340,22 @@ export function QuoteForm() {
                 </div>
               </div>
 
+              {submitError && (
+                <p
+                  role="alert"
+                  className="rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive"
+                >
+                  {submitError}
+                </p>
+              )}
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full inline-flex h-16 items-center justify-center rounded-2xl bg-primary px-10 text-xl font-bold text-primary-foreground shadow-xl transition-all hover:bg-primary/90 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 mt-8"
+                className="w-full inline-flex h-16 items-center justify-center rounded-2xl bg-primary px-10 text-xl font-bold text-primary-foreground shadow-xl transition-all hover:bg-primary/90 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 mt-8"
               >
-                {isSubmitting ? "Generating Quote..." : "Get My Free Quote"}
+                {isSubmitting ? "Sending…" : "Get My Free Quote"}
               </motion.button>
             </form>
           </div>

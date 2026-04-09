@@ -18,33 +18,33 @@ const servicesList = [
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
-      <section className="relative w-full py-20 md:py-32 lg:py-48 xl:py-56 bg-black text-white overflow-hidden">
-        {/* Background Image with Overlay */}
-        <div 
-          className="absolute inset-0 z-0 opacity-40 bg-cover bg-center"
+      {/* Hero Section — theme-aware */}
+      <section className="relative w-full py-16 md:py-24 lg:py-32 xl:py-40 bg-background text-foreground overflow-hidden border-b border-border/40">
+        <div
+          className="absolute inset-0 z-0 bg-cover bg-center opacity-[0.22] dark:opacity-[0.35]"
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=2940&auto=format&fit=crop')" }}
         />
-        <div className="absolute inset-0 z-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
-        
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-background via-background/92 to-muted/40 dark:via-background/95 dark:to-background/80" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-primary/[0.06] via-transparent to-transparent dark:from-primary/10" />
+
         <div className="container mx-auto relative z-10 px-4 md:px-6">
           <div className="flex flex-col items-start space-y-6 max-w-4xl">
-            <h1 className="text-4xl font-bold tracking-tighter sm:text-6xl md:text-7xl lg:text-8xl bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+            <h1 className="font-display text-4xl font-bold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground to-primary">
               Reliable Moving & Transport across the GTA, Canada
             </h1>
-            <p className="max-w-[700px] text-gray-300 text-lg md:text-2xl leading-relaxed">
+            <p className="max-w-[700px] text-muted-foreground text-lg md:text-xl leading-relaxed">
               Fast, secure, and professional services for all your moving, shipping, and logistics needs. Avixzon delivers excellence.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 pt-4">
-              <Link 
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 pt-2">
+              <Link
                 href="/contact"
-                className="inline-flex h-14 items-center justify-center rounded-full bg-primary px-10 text-lg font-semibold text-primary-foreground shadow-lg transition-all hover:bg-primary/90 hover:scale-105 hover:shadow-xl focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                className="inline-flex h-14 items-center justify-center rounded-full bg-primary px-10 text-lg font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 hover:scale-[1.02] hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 Get a Quote
               </Link>
               <Link
                 href="/services"
-                className="inline-flex h-14 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-10 text-lg font-semibold shadow-lg transition-all hover:bg-white/20 hover:text-white hover:scale-105 hover:shadow-xl focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-white"
+                className="inline-flex h-14 items-center justify-center rounded-full border border-border bg-card/80 backdrop-blur-sm px-10 text-lg font-semibold text-foreground shadow-sm transition-all hover:bg-muted hover:border-primary/30 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 Explore Services
               </Link>
@@ -54,87 +54,67 @@ export default function Home() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="w-full py-20 md:py-32 bg-muted/30">
+      <section className="w-full py-16 md:py-24 lg:py-32 bg-muted/30">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-foreground">Why Choose Avixzon?</h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                We prioritize speed, reliability, and customer satisfaction above all else.
-              </p>
-            </div>
+          <div className="text-center mb-12 md:mb-16 space-y-3">
+            <p className="text-sm font-semibold uppercase tracking-widest text-primary">Our Promise</p>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-foreground">Why Choose Avixzon?</h2>
+            <p className="max-w-2xl mx-auto text-muted-foreground text-lg">
+              We prioritize speed, reliability, and customer satisfaction above all else.
+            </p>
           </div>
-          <div className="mx-auto grid max-w-6xl items-center gap-8 lg:grid-cols-3">
-            <div className="group relative flex flex-col items-center p-8 bg-card rounded-2xl border border-border/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-              <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                <Clock className="h-10 w-10" />
+          <div className="mx-auto grid max-w-6xl items-stretch gap-6 lg:grid-cols-3">
+            {[
+              { icon: Clock, title: "Fast & Timely", body: "We understand the value of time. Our team ensures punctual pickups and deliveries, every time." },
+              { icon: ShieldCheck, title: "Safe & Secure", body: "Your belongings are precious. We treat every item with white-glove care and top-tier security." },
+              { icon: Globe, title: "Wide Network", body: "Covering the entire Greater Toronto Area and beyond with our comprehensive logistics network." },
+            ].map(({ icon: Icon, title, body }) => (
+              <div key={title} className="group flex flex-col items-center p-8 bg-card rounded-2xl border border-border/50 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
+                  <Icon className="h-8 w-8" />
+                </div>
+                <h3 className="text-xl font-bold mb-3 text-foreground">{title}</h3>
+                <p className="text-muted-foreground text-center leading-relaxed">{body}</p>
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-foreground">Fast & Timely</h3>
-              <p className="text-muted-foreground text-center text-lg">
-                We understand the value of time. Our team ensures punctual pickups and deliveries, every time.
-              </p>
-            </div>
-            
-            <div className="group relative flex flex-col items-center p-8 bg-card rounded-2xl border border-border/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-              <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                <ShieldCheck className="h-10 w-10" />
-              </div>
-              <h3 className="text-2xl font-bold mb-3 text-foreground">Safe & Secure</h3>
-              <p className="text-muted-foreground text-center text-lg">
-                Your belongings are precious. We treat every item with white-glove care and top-tier security.
-              </p>
-            </div>
-
-            <div className="group relative flex flex-col items-center p-8 bg-card rounded-2xl border border-border/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-              <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                <Globe className="h-10 w-10" />
-              </div>
-              <h3 className="text-2xl font-bold mb-3 text-foreground">Wide Network</h3>
-              <p className="text-muted-foreground text-center text-lg">
-                Covering the entire Greater Toronto Area and beyond with our comprehensive logistics network.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Services Section - Redesigned */}
-      <section className="w-full py-20 md:py-32 bg-background">
+      {/* Services Section */}
+      <section className="w-full py-16 md:py-24 lg:py-32 bg-background">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-foreground">Our Premium Services</h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Comprehensive moving and logistics solutions tailored to your needs.
-              </p>
-            </div>
+          <div className="text-center mb-12 md:mb-16 space-y-3">
+            <p className="text-sm font-semibold uppercase tracking-widest text-primary">What We Offer</p>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-foreground">Our Premium Services</h2>
+            <p className="max-w-2xl mx-auto text-muted-foreground text-lg">
+              Comprehensive moving and logistics solutions tailored to your needs.
+            </p>
           </div>
-          <div className="mx-auto grid max-w-7xl items-start gap-6 sm:grid-cols-2 lg:grid-cols-3">
-             {servicesList.map((service, index) => (
-                <div key={index} className="group relative overflow-hidden rounded-2xl border border-border/40 bg-card p-8 shadow-sm transition-all hover:shadow-2xl hover:border-primary/50 hover:-translate-y-2">
-                  <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
-                    <service.icon className="h-24 w-24 text-primary" />
-                  </div>
-                  <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                    <service.icon className="h-7 w-7" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors text-foreground">{service.name}</h3>
-                  <p className="text-muted-foreground mb-6">{service.description}</p>
-                  
-                  <Link href="/services" className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors">
-                    Learn more <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                  
-                  <Link href="/services" className="absolute inset-0 z-10">
-                    <span className="sr-only">View {service.name}</span>
-                  </Link>
+          <div className="mx-auto grid max-w-7xl items-start gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {servicesList.map((service, index) => (
+              <div key={index} className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card p-7 shadow-sm transition-all duration-300 hover:shadow-xl hover:border-primary/40 hover:-translate-y-1.5">
+                <div className="absolute top-0 right-0 p-4 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity duration-500">
+                  <service.icon className="h-28 w-28 text-primary" />
                 </div>
-             ))}
+                <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
+                  <service.icon className="h-6 w-6" />
+                </div>
+                <h3 className="text-lg font-bold mb-2 text-foreground group-hover:text-primary transition-colors">{service.name}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed mb-5">{service.description}</p>
+                <span className="inline-flex items-center text-sm font-semibold text-primary">
+                  Learn more <ArrowRight className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                </span>
+                <Link href="/services" className="absolute inset-0 z-10">
+                  <span className="sr-only">View {service.name}</span>
+                </Link>
+              </div>
+            ))}
           </div>
-          <div className="flex justify-center mt-12">
+          <div className="flex justify-center mt-10 md:mt-14">
             <Link
               href="/services"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-input bg-background px-10 text-base font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-foreground"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-border bg-background px-10 text-base font-semibold text-foreground shadow-sm transition-all hover:bg-primary hover:text-primary-foreground hover:border-primary hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               View All Services
             </Link>
@@ -143,11 +123,12 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="w-full py-20 md:py-32 bg-muted/30">
+      <section className="w-full py-16 md:py-24 lg:py-32 bg-muted/30">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-foreground">What Our Clients Say</h2>
-            <p className="text-muted-foreground md:text-xl">
+          <div className="text-center mb-10 md:mb-14 space-y-3">
+            <p className="text-sm font-semibold uppercase tracking-widest text-primary">Client Reviews</p>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-foreground">What Our Clients Say</h2>
+            <p className="text-muted-foreground text-lg">
               Trusted by homeowners and businesses across Ontario.
             </p>
           </div>
@@ -156,7 +137,7 @@ export default function Home() {
       </section>
 
       {/* Quote Section */}
-      <section className="w-full py-20 md:py-32 bg-background">
+      <section className="w-full py-16 md:py-24 lg:py-32 bg-background">
         <div className="container mx-auto px-4 md:px-6">
           <QuoteForm />
         </div>

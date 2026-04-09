@@ -46,9 +46,9 @@ export function Testimonials() {
 
   const slideVariants = {
     enter: (direction: number) => ({
-      x: direction > 0 ? 1000 : -1000,
+      x: direction > 0 ? 120 : -120,
       opacity: 0,
-      scale: 0.8,
+      scale: 0.98,
     }),
     center: {
       zIndex: 1,
@@ -58,9 +58,9 @@ export function Testimonials() {
     },
     exit: (direction: number) => ({
       zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
+      x: direction < 0 ? 120 : -120,
       opacity: 0,
-      scale: 0.8,
+      scale: 0.98,
     }),
   };
 
@@ -75,7 +75,7 @@ export function Testimonials() {
 
   return (
     <div className="relative w-full max-w-5xl mx-auto px-4">
-      <div className="flex justify-center items-center h-[450px] relative overflow-hidden">
+      <div className="flex justify-center items-stretch sm:items-center min-h-[18rem] sm:min-h-[22rem] md:min-h-[26rem] py-6 sm:py-8 relative overflow-hidden">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
             key={currentIndex}
@@ -88,9 +88,9 @@ export function Testimonials() {
               x: { type: "spring", stiffness: 300, damping: 30 },
               opacity: { duration: 0.2 },
             }}
-            className="absolute w-full px-4"
+            className="absolute w-full max-w-3xl left-1/2 -translate-x-1/2 px-2 sm:px-4"
           >
-            <div className="bg-card border border-border/50 rounded-2xl p-8 md:p-12 shadow-2xl text-center mx-auto max-w-3xl relative overflow-hidden">
+            <div className="bg-card border border-border/50 rounded-2xl p-6 sm:p-8 md:p-12 shadow-2xl text-center mx-auto w-full relative overflow-hidden">
                {/* Decorative background element */}
                <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl" />
                <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl" />
@@ -117,7 +117,7 @@ export function Testimonials() {
                   ))}
                 </div>
 
-                <blockquote className="text-xl md:text-2xl font-medium leading-relaxed mb-6 italic text-foreground/90">
+                <blockquote className="font-display text-base sm:text-xl md:text-2xl font-medium leading-relaxed mb-6 italic text-foreground/90">
                   "{testimonials[currentIndex].content}"
                 </blockquote>
 
