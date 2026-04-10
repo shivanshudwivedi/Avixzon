@@ -44,111 +44,122 @@ export function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
-  const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 120 : -120,
-      opacity: 0,
-      scale: 0.98,
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-      scale: 1,
-    },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? 120 : -120,
-      opacity: 0,
-      scale: 0.98,
-    }),
+  const variants = {
+    enter: (dir: number) => ({ x: dir > 0 ? 60 : -60, opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (dir: number) => ({ x: dir < 0 ? 60 : -60, opacity: 0 }),
   };
 
   const swipe = (newDirection: number) => {
     setDirection(newDirection);
-    if (newDirection === 1) {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-    } else {
-      setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-    }
+    setCurrentIndex((prev) =>
+      newDirection === 1
+        ? (prev + 1) % testimonials.length
+        : (prev - 1 + testimonials.length) % testimonials.length
+    );
   };
 
+  const t = testimonials[currentIndex];
+
   return (
-    <div className="relative w-full max-w-5xl mx-auto px-4">
-      <div className="flex justify-center items-stretch sm:items-center min-h-[18rem] sm:min-h-[22rem] md:min-h-[26rem] py-6 sm:py-8 relative overflow-hidden">
+    <div className="relative w-full max-w-3xl mx-auto px-2 sm:px-4">
+      {/* Card — sized by its own content, no overflow-hidden parent clipping */}
+      <div className="relative">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
             key={currentIndex}
             custom={direction}
-            variants={slideVariants}
+            variants={variants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{
-              x: { type: "spring", stiffness: 300, damping: 30 },
-              opacity: { duration: 0.2 },
-            }}
-            className="absolute w-full max-w-3xl left-1/2 -translate-x-1/2 px-2 sm:px-4"
+            transition={{ duration: 0.25, ease: "easeInOut" }}
           >
-            <div className="bg-card border border-border/50 rounded-2xl p-6 sm:p-8 md:p-12 shadow-2xl text-center mx-auto w-full relative overflow-hidden">
-               {/* Decorative background element */}
-               <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl" />
-               <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl" />
+            <div className="bg-card border border-border/50 rounded-2xl p-6 sm:p-8 md:p-10 shadow-xl text-center relative overflow-hidden">
+              {/* Decorative blobs */}
+              <div className="pointer-events-none absolute -top-10 -right-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-10 -left-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl" />
 
               <div className="relative z-10 flex flex-col items-center">
-                <div className="mb-6 relative">
-                  <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-background shadow-lg">
-                    <Image 
-                      src={testimonials[currentIndex].image} 
-                      alt={testimonials[currentIndex].name}
+                {/* Avatar */}
+                <div className="mb-5 relative inline-block">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-4 border-background shadow-lg">
+                    <Image
+                      src={t.image}
+                      alt={t.name}
                       width={96}
                       height={96}
                       className="object-cover w-full h-full"
                     />
                   </div>
-                  <div className="absolute -bottom-2 -right-2 bg-primary text-primary-foreground rounded-full p-1.5 shadow-md">
-                    <Star className="h-4 w-4 fill-current" />
+                  <div className="absolute -bottom-1 -right-1 bg-primary text-primary-foreground rounded-full p-1.5 shadow-md">
+                    <Star className="h-3.5 w-3.5 fill-current" />
                   </div>
                 </div>
 
-                <div className="flex justify-center space-x-1 mb-4">
-                  {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
+                {/* Stars */}
+                <div className="flex justify-center gap-0.5 mb-4">
+                  {Array.from({ length: t.rating }).map((_, i) => (
                     <Star key={i} className="h-4 w-4 fill-primary text-primary" />
                   ))}
                 </div>
 
-                <blockquote className="font-display text-base sm:text-xl md:text-2xl font-medium leading-relaxed mb-6 italic text-foreground/90">
-                  "{testimonials[currentIndex].content}"
+                {/* Quote */}
+                <blockquote className="font-display text-base sm:text-lg md:text-xl font-medium leading-relaxed mb-5 italic text-foreground/90 max-w-xl mx-auto">
+                  &ldquo;{t.content}&rdquo;
                 </blockquote>
 
-                <div className="flex flex-col items-center">
-                  <cite className="not-italic font-bold text-lg text-primary">
-                    {testimonials[currentIndex].name}
-                  </cite>
-                  <span className="text-muted-foreground text-sm font-medium">
-                    {testimonials[currentIndex].role}
-                  </span>
-                </div>
+                {/* Attribution */}
+                <cite className="not-italic">
+                  <span className="block font-bold text-base text-primary">{t.name}</span>
+                  <span className="text-muted-foreground text-sm">{t.role}</span>
+                </cite>
               </div>
             </div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      <div className="flex justify-center space-x-4 mt-4">
+      {/* Controls */}
+      <div className="flex items-center justify-center gap-4 mt-6">
         <button
+          type="button"
           onClick={() => swipe(-1)}
-          className="p-3 rounded-full bg-background border border-input shadow-md hover:bg-primary hover:text-primary-foreground transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary hover:scale-110"
+          className="p-3 rounded-full bg-background border border-border shadow-sm hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
           aria-label="Previous testimonial"
         >
-          <ChevronLeft className="h-6 w-6" />
+          <ChevronLeft className="h-5 w-5" />
         </button>
+
+        {/* Dots */}
+        <div className="flex gap-1.5" role="tablist" aria-label="Testimonials">
+          {testimonials.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              role="tab"
+              aria-selected={i === currentIndex}
+              onClick={() => {
+                setDirection(i > currentIndex ? 1 : -1);
+                setCurrentIndex(i);
+              }}
+              className={`h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-ring ${
+                i === currentIndex
+                  ? "w-6 bg-primary"
+                  : "w-2 bg-border hover:bg-muted-foreground"
+              }`}
+              aria-label={`Go to testimonial ${i + 1}`}
+            />
+          ))}
+        </div>
+
         <button
+          type="button"
           onClick={() => swipe(1)}
-          className="p-3 rounded-full bg-background border border-input shadow-md hover:bg-primary hover:text-primary-foreground transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary hover:scale-110"
+          className="p-3 rounded-full bg-background border border-border shadow-sm hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
           aria-label="Next testimonial"
         >
-          <ChevronRight className="h-6 w-6" />
+          <ChevronRight className="h-5 w-5" />
         </button>
       </div>
     </div>
