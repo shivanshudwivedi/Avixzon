@@ -21,6 +21,15 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Avixzon - Moving & Transport",
   description: "Fast, reliable, and quick moving and transport services in the Greater Toronto Area.",
+  icons: {
+    icon: [
+      { url: "/logo2.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/logo2.png", type: "image/png" },
+    ],
+    shortcut: "/logo2.png",
+  },
 };
 
 export const viewport: Viewport = {

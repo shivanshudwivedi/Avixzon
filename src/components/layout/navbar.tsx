@@ -45,7 +45,7 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center shrink-0">
           <Image
-            src="/logo2.jpg"
+            src="/logo2.png"
             alt="Avixzon"
             width={112}
             height={52}
