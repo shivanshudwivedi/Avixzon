@@ -4,12 +4,12 @@ import Link from "next/link";
 
 export default function ContactPage() {
   return (
-    <div className="container mx-auto px-4 py-16 md:py-24 lg:py-32">
-      <div className="text-center mb-12 md:mb-16 space-y-3">
-        <p className="text-sm font-semibold uppercase tracking-widest text-primary">Reach Out</p>
-        <h1 className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-foreground">Contact Us</h1>
-        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-          Ready to move? Have questions? Get in touch with us today.
+    <div className="container mx-auto px-5 md:px-8 py-16 md:py-24 lg:py-32">
+      <div className="text-center mb-12 md:mb-16 space-y-4">
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">Reach Out</p>
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground">Contact Us.</h1>
+        <p className="text-muted-foreground text-lg max-w-xl mx-auto leading-relaxed">
+          Ready to move? Have questions? We&apos;re here to help.
         </p>
       </div>
 

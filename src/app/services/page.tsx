@@ -90,32 +90,31 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Header Section */}
-      <div className="relative py-16 md:py-24 lg:py-32 bg-muted/30 border-b border-border/50 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.06]" />
-        <div className="container mx-auto px-4 relative z-10 text-center space-y-4">
-          <p className="text-sm font-semibold uppercase tracking-widest text-primary">What We Do</p>
+      <div className="relative py-20 md:py-28 lg:py-36 bg-muted border-b border-border overflow-hidden">
+        <div className="container mx-auto px-5 md:px-8 relative z-10 text-center space-y-5">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">What We Do</p>
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground"
           >
-            Our Premium Services
+            Our Services.
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto"
+            className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
           >
             Comprehensive logistics and moving solutions tailored to your needs.
-            Experience the Avixzon standard of excellence.
+            The Avixzon standard of excellence.
           </motion.p>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-12 md:py-16 lg:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      <div className="container mx-auto px-5 md:px-8 py-14 md:py-20 lg:py-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
           {services.map((service, index) => (
             <motion.div
               key={service.id}
@@ -125,7 +124,7 @@ export default function ServicesPage() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.05 }}
               onClick={() => setSelectedId(service.id)}
-              className="group cursor-pointer rounded-2xl border border-border bg-card p-8 shadow-sm hover:shadow-2xl hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 relative overflow-hidden"
+              className="group cursor-pointer rounded-2xl border border-border bg-card p-7 transition-all duration-300 hover:shadow-xl hover:border-primary/40 hover:-translate-y-1 relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity transform scale-150 group-hover:rotate-12 duration-500">
                 <service.icon className="h-32 w-32 text-primary" />

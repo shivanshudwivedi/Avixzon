@@ -2,100 +2,120 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { cn } from "@/lib/utils";
 
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "Services", href: "/services" },
-  { name: "Contact Us", href: "/contact" },
+  { name: "Contact", href: "/contact" },
 ];
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [atTop, setAtTop] = useState(true);
+
+  useEffect(() => {
+    const onScroll = () => setAtTop(window.scrollY < 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 sm:h-20 items-center justify-between gap-3 px-4">
+    <nav
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500",
+        atTop && !isOpen
+          ? "border-b border-transparent bg-transparent"
+          : "border-b border-border/40 bg-background/90 backdrop-blur-2xl shadow-sm"
+      )}
+    >
+      <div className="container mx-auto flex h-16 sm:h-18 items-center justify-between gap-4 px-4 md:px-6">
         {/* Logo */}
-        <motion.div
-          whileHover={{ scale: 1.02 }}
-          transition={{ type: "spring", stiffness: 400, damping: 10 }}
-        >
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/logo2.jpg"
-              alt="Avixzon Logo"
-              width={120}
-              height={55}
-              className="h-14 w-auto sm:h-[4.5rem] rounded-full"
-              priority
-            />
-          </Link>
-        </motion.div>
+        <Link href="/" className="flex items-center shrink-0">
+          <Image
+            src="/logo2.jpg"
+            alt="Avixzon"
+            width={112}
+            height={52}
+            className="h-12 sm:h-14 w-auto rounded-full"
+            priority
+          />
+        </Link>
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-6 lg:gap-8">
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-7">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="relative text-base font-medium transition-colors hover:text-primary group"
+              className={cn(
+                "text-sm font-medium tracking-wide transition-colors",
+                atTop
+                  ? "text-white/80 hover:text-white"
+                  : "text-foreground/70 hover:text-foreground"
+              )}
             >
               {link.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
             </Link>
           ))}
-          <ThemeToggle />
+          <ThemeToggle isOverDark={atTop} />
           <Link
             href="/contact"
-            className="inline-flex h-10 items-center justify-center rounded-full bg-primary px-6 py-2 text-base font-medium text-primary-foreground shadow-md transition-all hover:bg-primary/90 hover:shadow-lg hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50"
+            className="inline-flex h-9 items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             Get a Quote
           </Link>
         </div>
 
-        {/* Mobile: theme + menu */}
+        {/* Mobile controls */}
         <div className="flex items-center gap-1 md:hidden">
-          <ThemeToggle />
+          <ThemeToggle isOverDark={atTop && !isOpen} />
           <button
+            type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
+            className={cn(
+              "inline-flex items-center justify-center rounded-lg p-2 transition-colors focus:outline-none",
+              atTop && !isOpen
+                ? "text-white/80 hover:bg-white/10 hover:text-white"
+                : "text-foreground/70 hover:bg-muted hover:text-foreground"
+            )}
+            aria-label="Toggle menu"
           >
-            <span className="sr-only">Open main menu</span>
-            {isOpen ? <X className="block h-8 w-8" /> : <Menu className="block h-8 w-8" />}
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden border-b border-border/40 bg-background overflow-hidden"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.18 }}
+            className="md:hidden border-b border-border/40 bg-background/95 backdrop-blur-2xl"
           >
-            <div className="space-y-1 px-4 pb-4 pt-2">
+            <div className="container mx-auto px-4 py-5 space-y-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="block rounded-md px-3 py-3 text-lg font-medium text-foreground hover:bg-muted hover:text-primary"
+                  className="block rounded-xl px-4 py-3 text-base font-medium text-foreground hover:bg-muted transition-colors"
                 >
                   {link.name}
                 </Link>
               ))}
-              <div className="pt-4">
+              <div className="pt-3 pb-1">
                 <Link
                   href="/contact"
                   onClick={() => setIsOpen(false)}
-                  className="block w-full rounded-full bg-primary px-3 py-3 text-center text-lg font-medium text-primary-foreground hover:bg-primary/90"
+                  className="block w-full rounded-full bg-primary py-3 text-center text-base font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
                 >
                   Get a Quote
                 </Link>

@@ -26,8 +26,10 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#09090b" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
   ],
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -47,7 +49,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 pt-16 sm:pt-18">{children}</main>
           <Footer />
         </ThemeProvider>
       </body>
