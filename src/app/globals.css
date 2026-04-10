@@ -40,31 +40,31 @@
 :root {
   color-scheme: light;
 
-  --background:  #ffffff;
+  --background:  #f5f5f7; /* Apple's subtle off-white — gives cards a place to sit */
   --foreground:  #1d1d1f; /* Apple's exact text colour */
 
   --primary:     #0071e3; /* Apple blue */
   --primary-foreground: #ffffff;
 
-  --secondary:   #f5f5f7; /* Apple's off-white */
+  --secondary:   #e8e8ed;
   --secondary-foreground: #1d1d1f;
 
-  --muted:       #f5f5f7;
+  --muted:       #e8e8ed; /* one step darker than background */
   --muted-foreground: #6e6e73; /* Apple's secondary text */
 
-  --accent:      #f5f5f7;
+  --accent:      #e8e8ed;
   --accent-foreground: #1d1d1f;
 
-  --card:        #ffffff;
+  --card:        #ffffff; /* pure white so cards lift off the page */
   --card-foreground: #1d1d1f;
 
   --popover:     #ffffff;
   --popover-foreground: #1d1d1f;
 
-  --border:      #d2d2d7; /* Apple's border */
-  --input:       #d2d2d7;
+  --border:      #c7c7cc; /* slightly darker for visibility */
+  --input:       #c7c7cc;
   --ring:        #0071e3;
-  --ring-offset-background: #ffffff;
+  --ring-offset-background: #f5f5f7;
 
   --destructive: #ff3b30; /* Apple red */
   --destructive-foreground: #ffffff;

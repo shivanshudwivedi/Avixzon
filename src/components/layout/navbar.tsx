@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
@@ -17,23 +18,30 @@ const navLinks = [
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [atTop, setAtTop] = useState(true);
+  const pathname = usePathname();
+
+  // Transparent-over-dark-hero only applies on the home page
+  const isHome = pathname === "/";
+  const transparent = isHome && atTop && !isOpen;
 
   useEffect(() => {
     const onScroll = () => setAtTop(window.scrollY < 60);
+    // Reset on route change
+    setAtTop(true);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [pathname]);
 
   return (
     <nav
       className={cn(
         "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500",
-        atTop && !isOpen
+        transparent
           ? "border-b border-transparent bg-transparent"
-          : "border-b border-border/40 bg-background/90 backdrop-blur-2xl shadow-sm"
+          : "border-b border-border/50 bg-background/90 backdrop-blur-2xl shadow-sm"
       )}
     >
-      <div className="container mx-auto flex h-16 sm:h-18 items-center justify-between gap-4 px-4 md:px-6">
+      <div className="container mx-auto flex h-16 items-center justify-between gap-4 px-4 md:px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center shrink-0">
           <Image
@@ -41,7 +49,7 @@ export function Navbar() {
             alt="Avixzon"
             width={112}
             height={52}
-            className="h-12 sm:h-14 w-auto rounded-full"
+            className="h-12 w-auto rounded-full"
             priority
           />
         </Link>
@@ -54,7 +62,7 @@ export function Navbar() {
               href={link.href}
               className={cn(
                 "text-sm font-medium tracking-wide transition-colors",
-                atTop
+                transparent
                   ? "text-white/80 hover:text-white"
                   : "text-foreground/70 hover:text-foreground"
               )}
@@ -62,7 +70,7 @@ export function Navbar() {
               {link.name}
             </Link>
           ))}
-          <ThemeToggle isOverDark={atTop} />
+          <ThemeToggle isOverDark={transparent} />
           <Link
             href="/contact"
             className="inline-flex h-9 items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
@@ -73,13 +81,13 @@ export function Navbar() {
 
         {/* Mobile controls */}
         <div className="flex items-center gap-1 md:hidden">
-          <ThemeToggle isOverDark={atTop && !isOpen} />
+          <ThemeToggle isOverDark={transparent} />
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
               "inline-flex items-center justify-center rounded-lg p-2 transition-colors focus:outline-none",
-              atTop && !isOpen
+              transparent
                 ? "text-white/80 hover:bg-white/10 hover:text-white"
                 : "text-foreground/70 hover:bg-muted hover:text-foreground"
             )}
@@ -98,7 +106,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18 }}
-            className="md:hidden border-b border-border/40 bg-background/95 backdrop-blur-2xl"
+            className="md:hidden border-b border-border/50 bg-background/95 backdrop-blur-2xl"
           >
             <div className="container mx-auto px-4 py-5 space-y-1">
               {navLinks.map((link) => (

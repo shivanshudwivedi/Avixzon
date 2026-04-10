@@ -75,7 +75,7 @@ export function Testimonials() {
             exit="exit"
             transition={{ duration: 0.25, ease: "easeInOut" }}
           >
-            <div className="bg-card border border-border/50 rounded-2xl p-6 sm:p-8 md:p-10 shadow-xl text-center relative overflow-hidden">
+            <div className="bg-card border border-border rounded-2xl p-6 sm:p-8 md:p-10 shadow-lg text-center relative overflow-hidden">
               {/* Decorative blobs */}
               <div className="pointer-events-none absolute -top-10 -right-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl" />
               <div className="pointer-events-none absolute -bottom-10 -left-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl" />
@@ -125,7 +125,7 @@ export function Testimonials() {
         <button
           type="button"
           onClick={() => swipe(-1)}
-          className="p-3 rounded-full bg-background border border-border shadow-sm hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
+          className="p-3 rounded-full bg-card border border-border shadow-sm hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
           aria-label="Previous testimonial"
         >
           <ChevronLeft className="h-5 w-5" />
@@ -156,7 +156,7 @@ export function Testimonials() {
         <button
           type="button"
           onClick={() => swipe(1)}
-          className="p-3 rounded-full bg-background border border-border shadow-sm hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
+          className="p-3 rounded-full bg-card border border-border shadow-sm hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
           aria-label="Next testimonial"
         >
           <ChevronRight className="h-5 w-5" />

@@ -88,7 +88,7 @@ export default function ServicesPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-background pb-20">
+    <div className="min-h-screen bg-muted pb-20">
       {/* Header Section */}
       <div className="relative py-20 md:py-28 lg:py-36 bg-muted border-b border-border overflow-hidden">
         <div className="container mx-auto px-5 md:px-8 relative z-10 text-center space-y-5">

@@ -79,8 +79,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Bottom fade into background */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
+        {/* Bottom fade — fades into the page background colour */}
+        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#f5f5f7] dark:from-black to-transparent" />
       </section>
 
       {/* ── Stats strip ──────────────────────────────────────────── */}
@@ -203,7 +203,7 @@ export default function Home() {
       </section>
 
       {/* ── Testimonials ──────────────────────────────────────────── */}
-      <section className="w-full py-20 md:py-28 lg:py-36 bg-background">
+      <section className="w-full py-20 md:py-28 lg:py-36 bg-muted">
         <div className="container mx-auto px-5 md:px-8">
           <div className="text-center mb-12 md:mb-16 space-y-4">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Reviews</p>
