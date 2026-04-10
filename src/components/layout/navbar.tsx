@@ -41,7 +41,7 @@ export function Navbar() {
           : "border-b border-border/50 bg-background/90 backdrop-blur-2xl shadow-sm"
       )}
     >
-      <div className="container mx-auto flex h-16 items-center justify-between gap-4 px-4 md:px-6">
+      <div className="container mx-auto flex h-24 items-center justify-between gap-4 px-4 md:px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center shrink-0">
           <Image
@@ -49,7 +49,7 @@ export function Navbar() {
             alt="Avixzon"
             width={112}
             height={52}
-            className="h-12 w-auto rounded-full"
+            className="h-20 w-auto"
             priority
           />
         </Link>

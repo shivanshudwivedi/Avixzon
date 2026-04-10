@@ -23,12 +23,13 @@ export const metadata: Metadata = {
   description: "Fast, reliable, and quick moving and transport services in the Greater Toronto Area.",
   icons: {
     icon: [
-      { url: "/logo2.png", type: "image/png" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-192.png",   sizes: "192x192", type: "image/png" },
     ],
     apple: [
-      { url: "/logo2.png", type: "image/png" },
+      { url: "/logo2.png", sizes: "180x180", type: "image/png" },
     ],
-    shortcut: "/logo2.png",
+    shortcut: "/favicon-32.png",
   },
 };
 
@@ -58,7 +59,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          <main className="flex-1 pt-16">{children}</main>
+          <main className="flex-1 pt-24">{children}</main>
           <Footer />
         </ThemeProvider>
       </body>
