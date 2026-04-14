@@ -34,7 +34,7 @@ export default function Home() {
     <div className="flex flex-col">
 
       {/* ── Hero ─────────────────────────────────────────────────── */}
-      <section className="relative min-h-[92vh] flex items-center bg-black text-white overflow-hidden -mt-24 pt-24">
+      <section className="relative min-h-[92vh] flex items-center bg-black text-white overflow-hidden -mt-28 pt-28">
         <Image
           src="/home2.webp"
           alt="Avixzon moving truck on the highway"

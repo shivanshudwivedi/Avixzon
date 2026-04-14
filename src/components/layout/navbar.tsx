@@ -20,13 +20,11 @@ export function Navbar() {
   const [atTop, setAtTop] = useState(true);
   const pathname = usePathname();
 
-  // Transparent-over-dark-hero only applies on the home page
   const isHome = pathname === "/";
   const transparent = isHome && atTop && !isOpen;
 
   useEffect(() => {
     const onScroll = () => setAtTop(window.scrollY < 60);
-    // Reset on route change
     setAtTop(true);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -41,30 +39,38 @@ export function Navbar() {
           : "border-b border-border/50 bg-background/90 backdrop-blur-2xl shadow-sm"
       )}
     >
-      <div className="container mx-auto flex h-24 items-center justify-between gap-4 px-4 md:px-6">
-        {/* Logo */}
-        <Link href="/" className="flex items-center shrink-0">
-          <Image
-            src="/logo2.png"
-            alt="Avixzon"
-            width={112}
-            height={52}
-            className="h-20 w-auto"
-            priority
-          />
+      <div className="container mx-auto flex h-28 items-center justify-between gap-4 px-4 md:px-8">
+
+        {/* Logo — rounded, brighter, glowing */}
+        <Link href="/" className="flex items-center shrink-0 group">
+          <div
+            className="transition-all duration-300 group-hover:scale-[1.04]"
+            style={{
+              filter: "drop-shadow(0 0 16px rgba(0, 113, 227, 0.50)) brightness(1.12)",
+            }}
+          >
+            <Image
+              src="/logo2.png"
+              alt="Avixzon"
+              width={140}
+              height={64}
+              className="h-24 w-auto rounded-2xl"
+              priority
+            />
+          </div>
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-7">
+        <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
               className={cn(
-                "text-sm font-medium tracking-wide transition-colors",
+                "text-base font-semibold tracking-wide transition-colors",
                 transparent
-                  ? "text-white/80 hover:text-white"
-                  : "text-foreground/70 hover:text-foreground"
+                  ? "text-white/85 hover:text-white"
+                  : "text-foreground/75 hover:text-foreground"
               )}
             >
               {link.name}
@@ -73,27 +79,27 @@ export function Navbar() {
           <ThemeToggle isOverDark={transparent} />
           <Link
             href="/contact"
-            className="inline-flex h-9 items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="inline-flex h-11 items-center justify-center rounded-full bg-primary px-7 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             Get a Quote
           </Link>
         </div>
 
         {/* Mobile controls */}
-        <div className="flex items-center gap-1 md:hidden">
+        <div className="flex items-center gap-2 md:hidden">
           <ThemeToggle isOverDark={transparent} />
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
-              "inline-flex items-center justify-center rounded-lg p-2 transition-colors focus:outline-none",
+              "inline-flex items-center justify-center rounded-xl p-2.5 transition-colors focus:outline-none",
               transparent
-                ? "text-white/80 hover:bg-white/10 hover:text-white"
-                : "text-foreground/70 hover:bg-muted hover:text-foreground"
+                ? "text-white/85 hover:bg-white/10 hover:text-white"
+                : "text-foreground/75 hover:bg-muted hover:text-foreground"
             )}
             aria-label="Toggle menu"
           >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {isOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
           </button>
         </div>
       </div>
@@ -108,13 +114,13 @@ export function Navbar() {
             transition={{ duration: 0.18 }}
             className="md:hidden border-b border-border/50 bg-background/95 backdrop-blur-2xl"
           >
-            <div className="container mx-auto px-4 py-5 space-y-1">
+            <div className="container mx-auto px-5 py-5 space-y-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="block rounded-xl px-4 py-3 text-base font-medium text-foreground hover:bg-muted transition-colors"
+                  className="block rounded-xl px-4 py-3.5 text-lg font-semibold text-foreground hover:bg-muted hover:text-primary transition-colors"
                 >
                   {link.name}
                 </Link>
@@ -123,7 +129,7 @@ export function Navbar() {
                 <Link
                   href="/contact"
                   onClick={() => setIsOpen(false)}
-                  className="block w-full rounded-full bg-primary py-3 text-center text-base font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
+                  className="block w-full rounded-full bg-primary py-3.5 text-center text-lg font-bold text-primary-foreground hover:bg-primary/90 transition-colors shadow-lg shadow-primary/25"
                 >
                   Get a Quote
                 </Link>
