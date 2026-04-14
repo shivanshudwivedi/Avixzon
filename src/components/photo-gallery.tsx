@@ -37,7 +37,7 @@ const slides = [
     title: "Fast global shipping for urgent cargo.",
   },
   {
-    src: "https://images.unsplash.com/photo-1519121785383-3229633bb50e?auto=format&fit=crop&w=2000&q=80",
+    src: "/ocean.jpeg",
     alt: "Container ship at sea for ocean freight",
     eyebrow: "Ocean Freight",
     title: "Cost-effective shipping across the seas.",

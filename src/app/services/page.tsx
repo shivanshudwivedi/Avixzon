@@ -61,7 +61,7 @@ const services = [
     id: "ocean-freight",
     title: "Ocean Freight",
     icon: Ship,
-    image: "https://images.unsplash.com/photo-1519121785383-3229633bb50e?auto=format&fit=crop&w=1400&q=80",
+    image: "/ocean.jpeg",
     description: "Cost-effective sea shipping solutions for large volumes and bulk cargo.",
     details: "Ideal for bulk shipments, our ocean freight services provide full container load (FCL) and less than container load (LCL) options. We handle customs clearance and port-to-port logistics efficiently.",
     features: ["FCL & LCL", "Port-to-Port", "Customs Clearance", "Cost Effective"],
