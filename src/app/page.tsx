@@ -23,8 +23,8 @@ const servicesList = [
 ];
 
 const stats = [
-  { value: "500+", label: "Happy clients" },
-  { value: "5.0★", label: "Google rating" },
+  { value: "1000+", label: "Happy clients" },
+  { value: "4.7★", label: "Google rating" },
   { value: "GTA",  label: "Wide coverage" },
   { value: "24/7", label: "Support" },
 ];
