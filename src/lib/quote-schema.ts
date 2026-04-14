@@ -11,6 +11,7 @@ export const quoteFormSchema = z.object({
     message: "Move date must be in the future",
   }),
   moveSize: z.string().min(1, "Please select a move size"),
+  parkingAvailable: z.boolean().optional(),
   /** Honeypot — must stay empty */
   website: z.string().max(0).optional(),
 });

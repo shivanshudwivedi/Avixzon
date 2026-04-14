@@ -7,32 +7,68 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const slides = [
   {
-    src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=2000&q=80",
-    alt: "Professional movers carefully handling boxes and furniture",
-    eyebrow: "White-Glove Service",
-    title: "Every move treated with care.",
+    src: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2000&q=80",
+    alt: "Premium rental car on an open road",
+    eyebrow: "Car Rentals",
+    title: "Your perfect ride, ready when you are.",
   },
   {
     src: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=2000&q=80",
-    alt: "Modern moving truck on a highway serving the GTA",
-    eyebrow: "Greater Toronto Area",
-    title: "Serving the GTA and beyond.",
+    alt: "Modern moving truck serving the Greater Toronto Area",
+    eyebrow: "Transportation",
+    title: "Dedicated fleet. Reliable logistics.",
   },
   {
-    src: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=2000&q=80",
-    alt: "Professional logistics team preparing a shipment",
-    eyebrow: "Expert Team",
-    title: "Trained professionals, every time.",
+    src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=2000&q=80",
+    alt: "Professional movers carefully handling boxes and furniture",
+    eyebrow: "Moving Services",
+    title: "Every move treated with white-glove care.",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=2000&q=80",
+    alt: "Professional packing with quality materials",
+    eyebrow: "Packing & Crating",
+    title: "Packed securely. Delivered safely.",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=2000&q=80",
+    alt: "Cargo aircraft ready for international freight",
+    eyebrow: "Air Freight",
+    title: "Fast global shipping for urgent cargo.",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1519121785383-3229633bb50e?auto=format&fit=crop&w=2000&q=80",
+    alt: "Container ship at sea for ocean freight",
+    eyebrow: "Ocean Freight",
+    title: "Cost-effective shipping across the seas.",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2000&q=80",
+    alt: "Customs documents and brokerage paperwork",
+    eyebrow: "Customs Brokerage",
+    title: "Seamless cross-border documentation.",
   },
   {
     src: "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=2000&q=80",
     alt: "Organised secure warehouse storage facility",
-    eyebrow: "Secure Storage",
-    title: "Climate-controlled facilities.",
+    eyebrow: "Warehousing",
+    title: "Climate-controlled storage you can trust.",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=2000&q=80",
+    alt: "Professional cleaning team at work",
+    eyebrow: "Cleaning Services",
+    title: "Move out — spotless. Move in — perfect.",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=2000&q=80",
+    alt: "Skilled manpower team ready to help",
+    eyebrow: "Manpower Services",
+    title: "Skilled hands for every heavy lift.",
   },
 ];
 
-const INTERVAL_MS = 5500;
+const INTERVAL_MS = 5000;
 
 export function PhotoGallery() {
   const [current, setCurrent] = useState(0);
@@ -46,16 +82,14 @@ export function PhotoGallery() {
   }, [current]);
 
   const next = useCallback(() => {
-    const n = (current + 1) % slides.length;
     setDirection(1);
-    setCurrent(n);
-  }, [current]);
+    setCurrent((c) => (c + 1) % slides.length);
+  }, []);
 
   const prev = useCallback(() => {
-    const n = (current - 1 + slides.length) % slides.length;
     setDirection(-1);
-    setCurrent(n);
-  }, [current]);
+    setCurrent((c) => (c - 1 + slides.length) % slides.length);
+  }, []);
 
   useEffect(() => {
     if (paused) return;
@@ -72,11 +106,11 @@ export function PhotoGallery() {
   return (
     <section
       className="relative w-full overflow-hidden bg-black"
-      style={{ height: "clamp(320px, 60vh, 700px)" }}
+      style={{ height: "clamp(340px, 60vh, 700px)" }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       aria-roledescription="carousel"
-      aria-label="Avixzon gallery"
+      aria-label="Avixzon services gallery"
     >
       {/* Slides */}
       <AnimatePresence initial={false} custom={direction} mode="sync">
@@ -98,7 +132,6 @@ export function PhotoGallery() {
             priority={current === 0}
             sizes="100vw"
           />
-          {/* Gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/10" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
         </motion.div>
@@ -141,9 +174,14 @@ export function PhotoGallery() {
         <ChevronRight className="h-5 w-5" />
       </button>
 
+      {/* Slide counter */}
+      <div className="absolute top-5 right-6 sm:right-10 text-white/60 text-xs font-semibold tabular-nums tracking-wider select-none">
+        {String(current + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
+      </div>
+
       {/* Dot indicators */}
       <div
-        className="absolute bottom-8 right-6 sm:bottom-10 sm:right-10 flex gap-2"
+        className="absolute bottom-8 right-6 sm:bottom-10 sm:right-10 flex gap-1.5"
         role="tablist"
       >
         {slides.map((_, i) => (
@@ -154,22 +192,22 @@ export function PhotoGallery() {
             aria-selected={i === current}
             onClick={() => go(i)}
             className={`h-1.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-1 focus:ring-white/50 ${
-              i === current ? "w-7 bg-white" : "w-1.5 bg-white/40 hover:bg-white/65"
+              i === current ? "w-6 bg-white" : "w-1.5 bg-white/35 hover:bg-white/60"
             }`}
-            aria-label={`Slide ${i + 1}`}
+            aria-label={`Slide ${i + 1}: ${slides[i].eyebrow}`}
           />
         ))}
       </div>
 
       {/* Progress bar */}
       {!paused && (
-        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/15">
+        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/10">
           <motion.div
             key={`prog-${current}`}
             initial={{ scaleX: 0, originX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: INTERVAL_MS / 1000, ease: "linear" }}
-            className="h-full bg-white/50"
+            className="h-full bg-white/45"
           />
         </div>
       )}

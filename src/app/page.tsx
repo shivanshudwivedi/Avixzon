@@ -3,19 +3,20 @@ import Image from "next/image";
 import {
   ArrowRight, Clock, ShieldCheck, Globe,
   Truck, Plane, Ship, Package, FileCheck,
-  Map, Warehouse, Sparkles, Users,
+  Route, Warehouse, Sparkles, Users, Car,
 } from "lucide-react";
 import { QuoteForm } from "@/components/quote-form";
 import { Testimonials } from "@/components/testimonials";
 import { PhotoGallery } from "@/components/photo-gallery";
 
 const servicesList = [
-  { name: "Air Freight",          icon: Plane,     description: "Fast global shipping for time-sensitive cargo." },
-  { name: "Ocean Freight",        icon: Ship,      description: "Cost-effective sea shipping for large volumes." },
+  { name: "Car Rentals",          icon: Car,       description: "Premium car rental — economy to luxury, daily or weekly.", primary: true },
+  { name: "Transportation",       icon: Route,     description: "Dedicated fleet and logistics for every need." },
   { name: "Moving Services",      icon: Truck,     description: "Stress-free residential & commercial moves." },
   { name: "Packing & Crating",    icon: Package,   description: "Professional protection for your valuables." },
+  { name: "Air Freight",          icon: Plane,     description: "Fast global shipping for time-sensitive cargo." },
+  { name: "Ocean Freight",        icon: Ship,      description: "Cost-effective sea shipping for large volumes." },
   { name: "Customs Brokerage",    icon: FileCheck, description: "Seamless cross-border documentation." },
-  { name: "Transport & Rentals",  icon: Map,       description: "Flexible vehicles and dedicated logistics." },
   { name: "Warehousing",          icon: Warehouse, description: "Secure short and long-term storage." },
   { name: "Cleaning Services",    icon: Sparkles,  description: "Post-move professional cleaning." },
   { name: "Manpower Services",    icon: Users,     description: "Skilled labour for every heavy lift." },
@@ -33,12 +34,12 @@ export default function Home() {
     <div className="flex flex-col">
 
       {/* ── Hero ─────────────────────────────────────────────────── */}
-      <section className="relative min-h-[92vh] flex items-center bg-black text-white overflow-hidden -mt-16 sm:-mt-18 pt-16 sm:pt-18">
+      <section className="relative min-h-[92vh] flex items-center bg-black text-white overflow-hidden -mt-24 pt-24">
         <Image
-          src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=2940&q=80"
+          src="/home2.webp"
           alt="Avixzon moving truck on the highway"
           fill
-          className="object-cover opacity-45"
+          className="object-cover opacity-50"
           priority
           sizes="100vw"
         />
@@ -163,8 +164,17 @@ export default function Home() {
             {servicesList.map((s) => (
               <div
                 key={s.name}
-                className="group relative overflow-hidden rounded-2xl bg-card border border-border p-6 transition-all duration-300 hover:border-primary/40 hover:shadow-xl hover:-translate-y-1"
+                className={`group relative overflow-hidden rounded-2xl bg-card p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
+                  s.primary
+                    ? "border border-primary/30 ring-1 ring-primary/20"
+                    : "border border-border hover:border-primary/40"
+                }`}
               >
+                {s.primary && (
+                  <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-widest bg-primary text-primary-foreground px-2 py-0.5 rounded-full">
+                    Primary
+                  </span>
+                )}
                 {/* Ghost icon */}
                 <div className="absolute -top-2 -right-2 opacity-[0.04] group-hover:opacity-[0.07] transition-opacity duration-500">
                   <s.icon className="h-28 w-28 text-foreground" />

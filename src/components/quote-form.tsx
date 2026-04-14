@@ -46,6 +46,7 @@ export function QuoteForm() {
 
   const date = watch("moveDate");
   const moveSize = watch("moveSize");
+  const parkingAvailable = watch("parkingAvailable");
 
   const onSubmit = async (data: QuoteFormValues) => {
     setSubmitError(null);
@@ -69,6 +70,7 @@ export function QuoteForm() {
           destination_address: data.destinationAddress,
           move_date: format(data.moveDate, "MMMM d, yyyy"),
           move_size: data.moveSize,
+          parking_available: data.parkingAvailable ? "Yes" : "No",
         },
         PUBLIC_KEY
       );
@@ -425,6 +427,33 @@ export function QuoteForm() {
                       </p>
                     )}
                   </div>
+                </div>
+
+                {/* Parking toggle */}
+                <div className="flex items-center justify-between p-4 rounded-2xl border border-border bg-muted/50">
+                  <div>
+                    <p className={labelClasses + " mb-0"}>Parking Available at Pickup</p>
+                    <p className="text-xs text-muted-foreground mt-0.5 ml-1">
+                      Is there accessible parking at the pickup location?
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={!!parkingAvailable}
+                    onClick={() => setValue("parkingAvailable", !parkingAvailable, { shouldValidate: true })}
+                    className={cn(
+                      "relative inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                      parkingAvailable ? "bg-primary" : "bg-input"
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-md ring-0 transition-transform duration-200",
+                        parkingAvailable ? "translate-x-5" : "translate-x-0"
+                      )}
+                    />
+                  </button>
                 </div>
               </section>
 
