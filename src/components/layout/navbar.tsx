@@ -50,7 +50,7 @@ export function Navbar() {
             }}
           >
             <Image
-              src="/logo2.png"
+              src="/avixzon-logo.jpg"
               alt="Avixzon"
               width={140}
               height={64}

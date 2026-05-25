@@ -43,6 +43,30 @@ const slides = [
     title: "Cost-effective shipping across the seas.",
   },
   {
+    src: "/labor1.jpg",
+    alt: "Professional packers and movers at work",
+    eyebrow: "Expert Packers",
+    title: "Handled with expertise, delivered with care.",
+  },
+  {
+    src: "/labor2.jpg",
+    alt: "Skilled moving crew loading a truck",
+    eyebrow: "Moving Crew",
+    title: "Your crew, ready from first box to last.",
+  },
+  {
+    src: "/labor3.jpg",
+    alt: "Team carefully packing household items",
+    eyebrow: "Careful Packing",
+    title: "Every item packed like it's our own.",
+  },
+  {
+    src: "/labor4.jpg",
+    alt: "Movers carrying furniture with precision",
+    eyebrow: "White-Glove Moving",
+    title: "Precision handling, stress-free moving.",
+  },
+  {
     src: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2000&q=80",
     alt: "Customs documents and brokerage paperwork",
     eyebrow: "Customs Brokerage",
