@@ -1,6 +1,19 @@
+import type { Metadata } from "next";
 import { QuoteForm } from "@/components/quote-form";
 import { Mail, Phone, MapPin, Facebook, Instagram } from "lucide-react";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Get a Moving or Freight Quote",
+  description:
+    "Request a free moving, transport or freight quote from Avixzon. Call (437) 775-2592 or visit us at 617-1050 Markham Road in Scarborough, Ontario.",
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    title: "Get a Moving or Freight Quote | Avixzon",
+    description: "Tell Avixzon about your move or shipment and get a clear plan from our GTA team.",
+    url: "/contact",
+  },
+};
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -26,11 +39,18 @@ function YouTubeIcon({ className }: { className?: string }) {
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-muted">
+    <div className="min-h-screen bg-muted avx-secondary-page">
+      <div className="bg-[#111814] text-white pt-36 pb-16 md:pt-44 md:pb-24">
+        <div className="container mx-auto px-5 md:px-8">
+          <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-[#d8ff57] mb-5">Start your move</p>
+          <h1 className="text-5xl sm:text-6xl md:text-8xl font-black tracking-[-0.06em] text-white max-w-4xl">Tell us where you&apos;re going.</h1>
+          <p className="text-white/60 font-semibold text-lg md:text-xl max-w-xl mt-6 leading-relaxed">Share the job. We&apos;ll help build the plan.</p>
+        </div>
+      </div>
       <div className="container mx-auto px-5 md:px-8 py-16 md:py-24 lg:py-28">
 
         {/* Header */}
-        <div className="text-center mb-12 md:mb-16 space-y-4">
+        <div className="hidden text-center mb-12 md:mb-16 space-y-4">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">Reach Out</p>
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground">Contact Us.</h1>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto leading-relaxed">
