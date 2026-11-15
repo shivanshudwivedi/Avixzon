@@ -1,7 +1,8 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { Bot, ChevronRight, MessageCircle, Phone, Send, X } from "lucide-react";
+import { Bot, MessageCircle, Phone, X } from "lucide-react";
+import { faqs, serviceBySlug, site } from "@/lib/operations";
 
 type Message = { role: "bot" | "user"; text: string };
 
@@ -15,11 +16,16 @@ const quickQuestions = [
 function answerQuestion(value: string) {
   const q = value.toLowerCase();
 
-  if (/(service|offer|do you do|help with)/.test(q)) {
-    return "Avixzon offers moving, transportation, packing and crating, air freight, ocean freight, customs brokerage, warehousing, cleaning, manpower services and car rentals.";
+  if (/(career|jobs?|hiring|vacanc)/.test(q)) {
+    return "See the Careers page under Company to explore role profiles and register your interest.";
   }
-  if (/(area|serve|coverage|city|where.*work|toronto|gta)/.test(q)) {
-    return "We serve the entire Greater Toronto Area, including Toronto, Scarborough, Mississauga, Brampton, Markham, Vaughan and surrounding regions. For a specific address, call (437) 775-2592.";
+  if (/(quote|price|cost|rate|estimate|how much)/.test(q)) return faqs[3][1] + " Use the Contact page or call " + site.phone + ".";
+  if (/(commercial cleaning|office cleaning|janitor|cleaning)/.test(q)) return serviceBySlug("cleaning-services")!.faq[1];
+  if (/(manpower|labou?r|crew)/.test(q)) return serviceBySlug("manpower-services")!.faq[1];
+  if (/(local transport|small truck|delivery)/.test(q)) return serviceBySlug("transportation")!.faq[1];
+  if (/(area|serve|coverage|city|where.*work|toronto|gta)/.test(q)) return "Our local coverage includes " + site.cities.join(", ") + " and nearby GTA communities. Call " + site.phone + " to confirm a particular site or shipment.";
+  if (/(service|offer|do you do|help with)/.test(q)) {
+    return faqs[0][1];
   }
   if (/(address|located|location|office)/.test(q)) {
     return "Our office is at 617-1050 Markham Road, Scarborough, Ontario M1H 2Y7, Canada.";
@@ -31,10 +37,7 @@ function answerQuestion(value: string) {
     return "You can email us at avixzon@gmail.com.";
   }
   if (/(hour|open|time|weekend)/.test(q)) {
-    return "Phone hours shown on our site are Monday to Friday, 9:00 a.m. to 5:00 p.m. For urgent questions, call (437) 775-2592.";
-  }
-  if (/(quote|price|cost|rate|estimate|how much)/.test(q)) {
-    return "Quotes depend on the job. Use the free quote form on our Contact page or call (437) 775-2592 for the fastest answer.";
+    return "To confirm availability, call Avixzon at " + site.phone + ".";
   }
   if (/(freight|air|ocean|ship|shipping|customs)/.test(q)) {
     return "Yes. Avixzon offers air freight, ocean freight and customs brokerage. Call (437) 775-2592 to discuss the shipment and destination.";
@@ -51,7 +54,7 @@ function answerQuestion(value: string) {
   if (/(clean|manpower|labou?r)/.test(q)) {
     return "Avixzon offers cleaning and manpower services. Call (437) 775-2592 so the team can confirm what your job needs.";
   }
-  if (/(hello|hi|hey|good morning|good afternoon)/.test(q)) {
+  if (/\b(hello|hi|hey|good morning|good afternoon)\b/.test(q)) {
     return "Hello! I can help with Avixzon’s services, service area, address, contact details and quotes. What would you like to know?";
   }
   if (/(thanks|thank you)/.test(q)) {
@@ -108,7 +111,7 @@ export function FaqConcierge() {
               <div className="avx-quick-questions">
                 {quickQuestions.map((question) => (
                   <button key={question} onClick={() => ask(question)}>
-                    {question}<ChevronRight size={15} />
+                    {question}
                   </button>
                 ))}
               </div>
@@ -121,7 +124,7 @@ export function FaqConcierge() {
               placeholder="Ask about Avixzon..."
               aria-label="Ask a question"
             />
-            <button type="submit" aria-label="Send question"><Send size={18} /></button>
+            <button type="submit" aria-label="Send question">Send</button>
           </form>
           <a className="avx-chat-phone" href="tel:+14377752592"><Phone size={14} /> Prefer a person? Call (437) 775-2592</a>
         </section>

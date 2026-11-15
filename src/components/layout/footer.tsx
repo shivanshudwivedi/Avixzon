@@ -1,44 +1,18 @@
 import Link from "next/link";
-import Image from "next/image";
-import { ArrowUpRight, Instagram, MapPin, Phone } from "lucide-react";
+import { Brand } from "./brand";
+import { AnalyticsPreferences } from "@/components/site-analytics";
+import { core, site } from "@/lib/operations";
+
+const company = [["About Us", "/about"], ["Careers", "/careers"], ["News", "/news"], ["Service Area", "/service-area"]];
 
 export function Footer() {
-  return (
-    <footer className="avx-footer">
-      <div className="avx-shell">
-        <div className="avx-footer-top">
-          <div>
-            <Link href="/" className="avx-wordmark avx-wordmark-footer">
-              <Image className="avx-brand-logo" src="/avixzon-logo.jpg" alt="" width={48} height={48} />
-              <span className="avx-brand-copy"><strong>AVIXZON</strong><small>Moving. Logistics. Freight.</small></span>
-            </Link>
-            <p>Moving, freight, transport and storage.<br />One trusted team across the GTA.</p>
-          </div>
-          <div className="avx-footer-links">
-            <div>
-              <strong>Navigate</strong>
-              <Link href="/">Home</Link>
-              <Link href="/services">Services</Link>
-              <Link href="/contact">Contact & quote</Link>
-            </div>
-            <div>
-              <strong>Reach us</strong>
-              <a href="tel:+14377752592"><Phone size={15} /> (437) 775-2592</a>
-              <a href="mailto:avixzon@gmail.com">avixzon@gmail.com</a>
-              <a href="https://www.instagram.com/avixzoncanada" target="_blank" rel="noreferrer"><Instagram size={15} /> Instagram</a>
-            </div>
-            <div>
-              <strong>Visit</strong>
-              <p><MapPin size={15} /> 617-1050 Markham Road<br />Scarborough, ON M1H 2Y7</p>
-            </div>
-          </div>
-        </div>
-        <div className="avx-footer-bottom">
-          <span>© {new Date().getFullYear()} Avixzon Inc.</span>
-          <span>Scarborough · Ontario · Canada</span>
-          <a href="tel:+14377752592">Start your move <ArrowUpRight size={14} /></a>
-        </div>
-      </div>
-    </footer>
-  );
+  return <footer className="ops-footer"><div className="ops-wrap">
+    <div className="ops-footer-grid">
+      <div className="ops-footer-brand"><Brand /><p>Operations & logistics</p></div>
+      <nav aria-label="Footer services"><h2>Services</h2>{core.map(s => <Link key={s.slug} href={"/services/" + s.slug}>{s.label}</Link>)}<Link href="/services">All services</Link></nav>
+      <nav aria-label="Footer company"><h2>Company</h2>{company.map(([name, path]) => <Link key={path} href={path}>{name}</Link>)}</nav>
+      <div className="ops-footer-contact"><h2>Get in touch</h2><a href={"tel:" + site.tel}>{site.phone}</a><a href={"mailto:" + site.email}>{site.email}</a><address>{site.address}</address><Link href="/contact" className="ops-footer-enquire">Contact Avixzon</Link></div>
+    </div>
+    <div className="ops-footer-bottom"><span>© {new Date().getFullYear()} {site.name}</span><nav aria-label="Social channels">{site.socials.map(([name, href]) => <a key={name} href={href} target="_blank" rel="noreferrer">{name}</a>)}<AnalyticsPreferences /></nav></div>
+  </div></footer>;
 }

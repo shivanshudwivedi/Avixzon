@@ -1,66 +1,47 @@
 "use client";
-
+import { Brand } from "./brand";
 import Link from "next/link";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, Menu, Phone, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { core } from "@/lib/operations";
 
-const links = [
-  { name: "Home", href: "/" },
-  { name: "Services", href: "/services" },
-  { name: "Contact", href: "/contact" },
+const menus = [
+  {name: "Services", links: [...core.map(s => [s.name, "/services/" + s.slug]), ["All services", "/services"]]},
+  {name: "Company", links: [["About Us", "/about"], ["Careers", "/careers"]]},
 ];
 
 export function Navbar() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
-
+  const [open, setOpen] = useState<string | null>(null);
+  const [mobile, setMobile] = useState(false);
+  const header = useRef<HTMLElement>(null);
+  const trigger = useRef<HTMLButtonElement | null>(null);
+  const path = usePathname();
+  const close = () => {setOpen(null);setMobile(false);};
   useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 24);
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
+    function outside(event: PointerEvent) {if (!header.current?.contains(event.target as Node)) close();}
+    document.addEventListener("pointerdown", outside);
+    return () => document.removeEventListener("pointerdown", outside);
   }, []);
+  return <header className="ops-header" ref={header} onKeyDown={event => {if (event.key === "Escape" && (open || mobile)) { close(); trigger.current?.focus(); }}}>
+    <a href="#main-content" className="ops-skip">Skip to content</a>
 
-  return (
-    <header className={`avx-nav ${scrolled || pathname !== "/" || open ? "avx-nav-solid" : ""}`}>
-      <div className="avx-shell avx-nav-inner">
-        <Link href="/" className="avx-wordmark" aria-label="Avixzon home">
-          <Image
-            className="avx-brand-logo"
-            src="/avixzon-logo.jpg"
-            alt=""
-            width={48}
-            height={48}
-            priority
-          />
-          <span className="avx-brand-copy">
-            <strong>AVIXZON</strong>
-            <small>Moving. Logistics. Freight.</small>
-          </span>
-        </Link>
-        <nav className="avx-nav-links" aria-label="Main navigation">
-          {links.map((link) => (
-            <Link className={pathname === link.href ? "is-active" : ""} href={link.href} key={link.href}>{link.name}</Link>
-          ))}
-        </nav>
-        <div className="avx-nav-actions">
-          <a className="avx-nav-phone" href="tel:+14377752592"><Phone size={16} /> (437) 775-2592</a>
-          <Link className="avx-nav-quote" href="/contact">Get a quote <ArrowUpRight size={16} /></Link>
-        </div>
-        <button className="avx-menu-button" onClick={() => setOpen((value) => !value)} aria-label="Toggle menu">
-          {open ? <X /> : <Menu />}
-        </button>
-      </div>
-      {open && (
-        <div className="avx-mobile-menu">
-          {links.map((link) => <Link href={link.href} key={link.href} onClick={() => setOpen(false)}>{link.name}</Link>)}
-          <a href="tel:+14377752592"><Phone size={18} /> (437) 775-2592</a>
-          <Link className="avx-button avx-button-coral" href="/contact" onClick={() => setOpen(false)}>Get a free quote <ArrowUpRight size={18} /></Link>
-        </div>
-      )}
-    </header>
-  );
+    <div className="ops-wrap ops-nav">
+      <Brand onClick={close} />
+      <nav className={"ops-nav-links" + (mobile ? " is-mobile" : "")} aria-label="Main navigation" id="site-navigation">
+        {menus.map(menu => <div className="ops-nav-group" key={menu.name}>
+          <button type="button" aria-expanded={open === menu.name} aria-controls={"nav-" + menu.name} onClick={e => {trigger.current = e.currentTarget; setOpen(open === menu.name ? null : menu.name);}}>{menu.name}<span className="ops-menu-indicator" aria-hidden="true" /></button>
+          <div hidden={open !== menu.name} className="ops-dropdown" id={"nav-" + menu.name}>
+            {menu.links.map(([name, href]) => <Link key={href} href={href} onClick={close} aria-current={path === href ? "page" : undefined}>{name}</Link>)}
+          </div>
+        </div>)}
+        <Link href="/service-area" onClick={close} aria-current={path === "/service-area" ? "page" : undefined}>Service Area</Link>
+        <Link href="/news" onClick={close} aria-current={path.startsWith("/news") ? "page" : undefined}>News</Link>
+        <Link href="/contact" onClick={close} aria-current={path === "/contact" ? "page" : undefined}>Contact</Link>
+        <Link className="ops-mobile-quote-link" href="/contact" onClick={close}>Request a quote </Link>
+      </nav>
+      <Link href="/contact" className="ops-button ops-nav-quote" onClick={close}>Request a quote </Link>
+      <button type="button" className="ops-mobile-toggle" aria-label={mobile ? "Close navigation" : "Open navigation"} aria-expanded={mobile} aria-controls="site-navigation" onClick={e => {trigger.current = e.currentTarget; if(mobile) close(); else setMobile(true);}}>{mobile ? <X /> : <Menu />}</button>
+    </div>
+  </header>;
 }

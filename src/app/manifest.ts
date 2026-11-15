@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "Professional moving, freight, transportation and warehousing services across Toronto and the GTA.",
     start_url: "/",
     display: "standalone",
-    background_color: "#f3f0e8",
-    theme_color: "#111814",
+    background_color: "#f6f8fc",
+    theme_color: "#111a2c",
     icons: [
       {
         src: "/icon-192.png",

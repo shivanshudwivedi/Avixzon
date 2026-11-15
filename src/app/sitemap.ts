@@ -1,26 +1,7 @@
 import type { MetadataRoute } from "next";
-
-const baseUrl = "https://avixzon.com";
+import { services, site } from "@/lib/operations";
+import { guides } from "@/lib/news";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/services`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-  ];
+  return ["/", "/services", "/about", "/careers", "/service-area", "/contact", "/news", ...services.map(s => "/services/" + s.slug), ...guides.map(g => "/news/" + g.slug)].map(path => ({url: site.url + path}));
 }
