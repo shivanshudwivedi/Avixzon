@@ -3,9 +3,22 @@
 ## Website measurement
 
 - The production site uses the existing GA4 Avixzon web stream and respects the visitor's analytics choice.
-- The site sends `page_view`, `contact_click`, `quote_email_draft` and `generate_lead`. Count a lead only when the quote service confirms it sent the enquiry. An opened email draft or contact click is an intent signal, not a lead.
+- The site sends `page_view`, `contact_click`, `quote_email_draft`, `whatsapp_open` and `generate_lead`. Count an opened draft, chat or contact click as intent, not a lead. Count WhatsApp enquiries only when the business actually receives a message.
 - Keep the report aggregate: traffic source, landing page, page views and confirmed enquiries. Never send form values, phone numbers, email addresses, addresses or message text to analytics.
 - Submit the production sitemap in Search Console once the site is live. Use Search Console impressions and clicks alongside GA4, not interchangeably. Meta Page and Instagram insight counts are separate measures.
+
+### Run a 30-day traffic experiment
+
+- Share the office cleaning guide as an Instagram Story link and a Facebook post. Link to the guide, not the homepage: `https://avixzon.com/news/commercial-cleaning-frequency-toronto?utm_source=instagram&utm_medium=social&utm_campaign=cleaning`. For Facebook, change only the source to `facebook`.
+- In week two, repeat for the loading and unloading guide using `utm_campaign=manpower`. Use the freight and local transport guides in the following weeks with `freight` and `transport`.
+- Compare landing sessions, WhatsApp opens and confirmed enquiries weekly by source. Check Search Console separately for organic clicks. Don't fund more traffic until you know which pages turn visits into real enquiries.
+- Only known campaign tags reach GA4; put no names, emails or customer identifiers in campaign links.
+
+## WhatsApp
+
+- Website visitors can open the business chat or an editable, service-specific quote draft. The link does not include any typed form values and sends nothing automatically.
+- In the business phone app, enable **Tools → Greeting message** for a first-contact acknowledgement if Meta Business Agent isn't already handling that inbox. Suggested text: “Thanks for contacting Avixzon. Please share the service you need, the city and your timing. Our team will review your request and follow up. If it’s urgent, call (437) 775-2592.”
+- True form-triggered follow-up is separate: use verified form delivery, a WhatsApp-specific opt-in, the registered WhatsApp Business Platform number, and a Meta-approved utility template for a business-initiated message. Record consent and prevent duplicate sends. Keep unsolicited marketing and automated pricing promises out of this flow.
 
 ## Muse operating instructions
 

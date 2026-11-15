@@ -3,6 +3,7 @@ export const site = {
   name: "Avixzon Inc.",
   phone: "(437) 775-2592",
   tel: "+14377752592",
+  whatsapp: "https://wa.me/14377752592",
   email: "avixzon@gmail.com",
   address: "617–1050 Markham Road, Scarborough, ON M1H 2Y7",
   cities: ["Scarborough", "Toronto", "Mississauga", "Brampton", "Markham", "Vaughan"],

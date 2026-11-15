@@ -15,6 +15,8 @@ export function EnquiryForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "draft" | "error">("idle");
   const [draft, setDraft] = useState("");
   const selected = serviceBySlug(service);
+  const whatsAppText = selected ? `Hi Avixzon, I’d like a quote for ${selected.name}. This is about an enquiry from your website.` : "Hi Avixzon, I’d like a quote. I found you on your website.";
+  const whatsApp = site.whatsapp + "?text=" + encodeURIComponent(whatsAppText);
   const isRoute = ["freight","transportation","moving-services","air-freight","ocean-freight","customs-brokerage"].includes(service);
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -53,7 +55,11 @@ export function EnquiryForm() {
       <label className="wide">Job details<textarea name="details" required rows={5} maxLength={1600} aria-describedby="job-hint" /><span id="job-hint">{selected?.brief ?? "Describe the work, your timeline and anything we should know before contacting you."}</span></label>
       <div hidden><label>Leave this empty<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
     </div>
-    <button className="ops-button" disabled={status === "sending" || status === "sent"}>{status === "sending" ? "Sending…" : status === "sent" ? "Enquiry sent" : serviceId && templateId && publicKey ? "Send enquiry" : "Open email draft"}</button>
+    <div className="ops-form-actions">
+      <button className="ops-button" disabled={status === "sending" || status === "sent"}>{status === "sending" ? "Sending…" : status === "sent" ? "Enquiry sent" : serviceId && templateId && publicKey ? "Send enquiry" : "Open email draft"}</button>
+      <a className="ops-quiet-button" href={whatsApp} target="_blank" rel="noreferrer" aria-describedby="whatsapp-hint" data-enquiry-service={selected?.slug ?? "general"}>Continue on WhatsApp</a>
+    </div>
+    <p className="ops-form-hint" id="whatsapp-hint">WhatsApp opens a draft with your service choice. Add any job details there and tap Send when ready.</p>
     <div role="status" className="ops-form-status">
       {status === "sent" && "Your enquiry was sent to Avixzon."}
       {status === "draft" && <>Send the draft from your email app to complete your request. <a href={draft}>Open the draft again</a>.</>}
