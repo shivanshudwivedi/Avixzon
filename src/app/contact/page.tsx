@@ -17,7 +17,7 @@ export default function ContactPage() {
         <a href={"mailto:" + site.email}><Mail size={20} aria-hidden />{site.email}</a>
         <address><MapPin size={20} aria-hidden />{site.address}</address>
       </aside>
-      <Suspense fallback={<div className="ops-form">Loading enquiry form…</div>}><EnquiryForm /></Suspense>
+      <Suspense fallback={<div className="ops-form">Loading enquiry form…</div>}><EnquiryForm netlifyForm={process.env.NETLIFY === "true"} /></Suspense>
     </div></section>
   </>;
 }

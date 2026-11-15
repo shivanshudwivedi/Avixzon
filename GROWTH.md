@@ -17,6 +17,7 @@
 ## WhatsApp
 
 - Website visitors can open the business chat or an editable, service-specific quote draft. The link does not include any typed form values and sends nothing automatically.
+- Netlify Forms records direct quote submissions privately and can notify the business inbox. The optional WhatsApp checkbox permits a reply about that quote only; it does not trigger a message or subscribe the visitor to marketing.
 - In the business phone app, enable **Tools → Greeting message** for a first-contact acknowledgement if Meta Business Agent isn't already handling that inbox. Suggested text: “Thanks for contacting Avixzon. Please share the service you need, the city and your timing. Our team will review your request and follow up. If it’s urgent, call (437) 775-2592.”
 - True form-triggered follow-up is separate: use verified form delivery, a WhatsApp-specific opt-in, the registered WhatsApp Business Platform number, and a Meta-approved utility template for a business-initiated message. Record consent and prevent duplicate sends. Keep unsolicited marketing and automated pricing promises out of this flow.
 

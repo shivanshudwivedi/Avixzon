@@ -187,6 +187,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,s
 .ops-form-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .ops-form-actions>a{display:inline-flex;align-items:center;min-height:44px}
 .ops-form-hint{margin-top:10px;font-size:.82rem;color:var(--muted)}
+.ops-quote-optin{display:flex;align-items:center;gap:10px;min-height:44px;margin:-5px 0 11px;font-size:.87rem;color:var(--muted)}
+.ops-quote-optin input{width:19px;height:19px;flex:none;accent-color:var(--brand)}
 .ops-form-status:not(:empty){margin-top:12px;font-size:.88rem}
 .avx-chat-launcher{position:fixed;bottom:max(16px,env(safe-area-inset-bottom));right:17px;z-index:28;display:flex;align-items:center;gap:8px;padding:11px 15px;min-height:44px;border:1px solid var(--brand);border-radius:999px;background:var(--brand);color:var(--white);box-shadow:0 8px 24px #111a2c30;font-size:.8rem;font-weight:700}
 .avx-chat-launcher:hover{background:var(--brand-hover)}
