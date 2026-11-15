@@ -1,86 +1,30 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Instrument_Serif } from "next/font/google";
+import { Inter } from "next/font/google";
 import Script from "next/script";
-import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import "./operations.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { FaqConcierge } from "@/components/faq-concierge";
+import { SiteMotion } from "@/components/operations-motion";
+import { SiteAnalytics } from "@/components/site-analytics";
+import { JsonLd } from "@/components/operations-ui";
+import { organization } from "@/lib/discovery";
+import { site } from "@/lib/operations";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans-body",
-  display: "swap",
-});
-
-const instrumentSerif = Instrument_Serif({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-display-family",
-  display: "swap",
-});
-
+const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--ops-font" });
 export const metadata: Metadata = {
-  title: "Avixzon - Moving & Transport",
-  description: "Fast, reliable, and quick moving and transport services in the Greater Toronto Area.",
-  icons: {
-    icon: [
-      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
-      { url: "/icon-192.png",   sizes: "192x192", type: "image/png" },
-    ],
-    apple: [
-      { url: "/avixzon-logo.jpg", sizes: "180x180", type: "image/jpeg" },
-    ],
-    shortcut: "/favicon-32.png",
-  },
+  metadataBase: new URL(site.url),
+  title: "Avixzon | Cleaning, Labour, Freight & Transport in the GTA",
+  applicationName: "Avixzon",
+  robots: { index: true, follow: true, googleBot: { "max-image-preview": "large" } },
+  manifest: "/manifest.webmanifest",
 };
+export const viewport: Viewport = { themeColor: "#111a2c", width: "device-width", initialScale: 1 };
 
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f5f5f7" },
-    { media: "(prefers-color-scheme: dark)", color: "#000000" },
-  ],
-  width: "device-width",
-  initialScale: 1,
-};
-
-const GTAG_ID = "AW-18185211647";
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* Google Ads tag */}
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GTAG_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="gtag-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GTAG_ID}');
-          `}
-        </Script>
-      </head>
-      <body
-        className={`${inter.variable} ${instrumentSerif.variable} ${inter.className} min-h-screen flex flex-col antialiased bg-background text-foreground`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Navbar />
-          <main className="flex-1 pt-28">{children}</main>
-          <Footer />
-        </ThemeProvider>
-      </body>
-    </html>
-  );
+export default function RootLayout({children}: {children: React.ReactNode}) {
+  return <html lang="en-CA"><body className={inter.variable}>
+    <JsonLd data={organization} />
+    {process.env.NODE_ENV === "production" && <><Script src="https://www.googletagmanager.com/gtag/js?id=AW-18185211647" strategy="afterInteractive" /><Script id="existing-ads-tag" strategy="afterInteractive">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-18185211647');`}</Script></>}
+    <Navbar /><main id="main-content">{children}</main><Footer /><FaqConcierge /><SiteMotion /><SiteAnalytics />
+  </body></html>;
 }
