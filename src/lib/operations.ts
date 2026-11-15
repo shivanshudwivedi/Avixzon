@@ -4,7 +4,7 @@ export const site = {
   phone: "(437) 775-2592",
   tel: "+14377752592",
   whatsapp: "https://wa.me/14377752592",
-  email: "avixzon@gmail.com",
+  email: "info@avixzon.com",
   address: "617–1050 Markham Road, Scarborough, ON M1H 2Y7",
   cities: ["Scarborough", "Toronto", "Mississauga", "Brampton", "Markham", "Vaughan"],
   socials: [
@@ -127,5 +127,5 @@ export const faqs: [string, string][] = [
   ["Where does Avixzon operate?", "Avixzon is based in Canada. Local service availability depends on the job address, and air and ocean freight routes are confirmed for each shipment. See our Service Area page for local coverage."],
   ["Can I book a single service?", "Yes. You can request one service or tell us where you need several services coordinated, such as labour and transport or freight and customs brokerage."],
   ["What do I need to request a quote?", "Start with the service, location, date or deadline and a short description of the work. For freight or transport, include the origin, destination, weight and dimensions if you know them."],
-  ["How do I speak to Avixzon?", "Call (437) 775-2592 or email avixzon@gmail.com. Our Scarborough address is 617–1050 Markham Road, Scarborough, ON M1H 2Y7."],
+  ["How do I speak to Avixzon?", `Call ${site.phone} or email ${site.email}. Our Scarborough address is ${site.address}.`],
 ];
