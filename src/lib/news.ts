@@ -36,8 +36,9 @@ export function socialEmbed(post: SocialPost) {
   let url: URL;
   try { url = new URL(post.url); } catch { return undefined; }
   if (url.protocol !== "https:") return undefined;
-  if (post.platform === "Instagram" && ["instagram.com","www.instagram.com"].includes(url.hostname) && /^\/(p|reel|tv)\/[\w-]+\/?$/.test(url.pathname)) {
-    return "https://www.instagram.com" + url.pathname.replace(/\/$/,"") + "/embed/";
+  if (post.platform === "Instagram" && ["instagram.com","www.instagram.com"].includes(url.hostname)) {
+    const path = url.pathname.match(/^\/(?:[\w.]+\/)?((?:p|reel|tv)\/[\w-]+)\/?$/)?.[1];
+    if (path) return "https://www.instagram.com/" + path + "/embed/";
   }
   if (post.platform === "Facebook" && ["facebook.com", "www.facebook.com"].includes(url.hostname) && /\/(posts|reel|videos)\//.test(url.pathname)) {
     const plugin = /\/(reel|videos)\//.test(url.pathname) ? "video.php" : "post.php";

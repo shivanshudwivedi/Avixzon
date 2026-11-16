@@ -99,14 +99,13 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,s
 .ops-news-card h3,.ops-social-post h3{font-size:clamp(1.16rem,2vw,1.7rem);letter-spacing:-.045em;line-height:1.14;margin:7px 22px 5px 0}
 .ops-news-card p:not(.ops-kicker),.ops-social-post p:not(.ops-kicker),.ops-guide-body p{color:var(--muted);font-size:.92rem}
 .ops-social-post iframe{margin-top:12px;border:0;width:100%;min-height:350px}
-.ops-social-post .ops-button{margin-top:12px}
 .ops-guide-body section+section{margin-top:25px}
 .ops-guide-body h2{font-size:clamp(1.45rem,3vw,2.15rem);margin-bottom:6px}
 .ops-article-byline{margin-bottom:16px}
 .ops-article-answer,.ops-public-instagram{background:var(--brand-tint);border-radius:var(--card-radius);padding:clamp(18px,3vw,30px)}
 .ops-public-instagram{margin:22px 0;display:grid;grid-template-columns:1fr auto;align-items:center;gap:14px}
-.ops-public-instagram .ops-actions,.ops-public-instagram .ops-text-link{margin-top:0}
-.ops-public-instagram iframe{display:block;grid-column:1/-1;border:0;border-radius:15px;width:min(100%,540px);height:520px;background:white}
+.ops-public-instagram .ops-text-link{margin-top:0}
+.ops-public-instagram iframe{display:block;grid-column:1/-1;justify-self:center;border:0;border-radius:15px;width:min(100%,540px);height:clamp(420px,75vw,520px);background:white}
 @media(max-width:680px){.ops-public-instagram{grid-template-columns:1fr}}
 .ops-media-credit{font-size:.75rem;color:var(--muted);padding-top:10px}
 .ops-media-credit a{text-decoration:underline}
@@ -185,6 +184,11 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,s
 .ops-fields textarea{resize:vertical}
 .ops-fields label span{font-size:.76rem;color:var(--muted);font-weight:480}
 #job-hint{display:block;margin-top:4px}
+.ops-form-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.ops-form-actions>a{display:inline-flex;align-items:center;min-height:44px}
+.ops-form-hint{margin-top:10px;font-size:.82rem;color:var(--muted)}
+.ops-quote-optin{display:flex;align-items:center;gap:10px;min-height:44px;margin:-5px 0 11px;font-size:.87rem;color:var(--muted)}
+.ops-quote-optin input{width:19px;height:19px;flex:none;accent-color:var(--brand)}
 .ops-form-status:not(:empty){margin-top:12px;font-size:.88rem}
 .avx-chat-launcher{position:fixed;bottom:max(16px,env(safe-area-inset-bottom));right:17px;z-index:28;display:flex;align-items:center;gap:8px;padding:11px 15px;min-height:44px;border:1px solid var(--brand);border-radius:999px;background:var(--brand);color:var(--white);box-shadow:0 8px 24px #111a2c30;font-size:.8rem;font-weight:700}
 .avx-chat-launcher:hover{background:var(--brand-hover)}

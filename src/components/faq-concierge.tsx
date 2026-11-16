@@ -31,10 +31,10 @@ function answerQuestion(value: string) {
     return "Our office is at 617-1050 Markham Road, Scarborough, Ontario M1H 2Y7, Canada.";
   }
   if (/(phone|call|contact|number)/.test(q)) {
-    return "Call Avixzon at (437) 775-2592. You can also email avixzon@gmail.com.";
+    return `Call Avixzon at ${site.phone}. You can also email ${site.email}.`;
   }
   if (/(email|mail)/.test(q)) {
-    return "You can email us at avixzon@gmail.com.";
+    return `You can email us at ${site.email}.`;
   }
   if (/(hour|open|time|weekend)/.test(q)) {
     return "To confirm availability, call Avixzon at " + site.phone + ".";

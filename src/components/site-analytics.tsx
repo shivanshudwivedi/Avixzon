@@ -11,6 +11,12 @@ type Choice = "allow" | "decline";
 type AnalyticsWindow = Window & { dataLayer?: unknown[]; gtag?: (...args: unknown[]) => void };
 let configured = false;
 let preference: Choice | undefined;
+let measuredLocation = "";
+const campaignTags = {
+  utm_source: ["instagram", "facebook", "linkedin", "google", "whatsapp"],
+  utm_medium: ["social", "paid_social", "organic", "referral", "cpc"],
+  utm_campaign: ["cleaning", "manpower", "freight", "transport", "business_profile"],
+};
 
 function activeHost() {
   return ["avixzon.com", "www.avixzon.com"].includes(window.location.hostname);
@@ -41,9 +47,19 @@ function tag(...args: unknown[]) {
   target.gtag(...args);
 }
 
+function cleanLocation(path: string) {
+  const url = new URL(path, location.origin);
+  const incoming = new URLSearchParams(location.search);
+  for (const [key, allowed] of Object.entries(campaignTags)) {
+    const value = incoming.get(key)?.toLowerCase();
+    if (value && allowed.includes(value)) url.searchParams.set(key, value);
+  }
+  return url.href;
+}
+
 export function measureEnquiry(event: "generate_lead" | "quote_email_draft", service: string) {
   if (!activeHost() || preference !== "allow" || !configured) return;
-  tag("event", event, { send_to: measurementId, service: /^[a-z-]{1,40}$/.test(service) ? service : "general" });
+  tag("event", event, { send_to: measurementId, page_location: measuredLocation, service: /^[a-z-]{1,40}$/.test(service) ? service : "general" });
 }
 
 export function AnalyticsPreferences() {
@@ -83,16 +99,23 @@ export function SiteAnalytics() {
     if (!referrer && document.referrer) {
       try { referrer = new URL(document.referrer).origin; } catch { /* skip invalid referrers */ }
     }
-    tag("event", "page_view", { send_to: measurementId, page_location: next, page_referrer: referrer });
+    measuredLocation = cleanLocation(path);
+    tag("event", "page_view", { send_to: measurementId, page_location: measuredLocation, page_referrer: referrer });
     lastPage.current = next;
   }, [choice, path]);
 
   useEffect(() => {
     function click(event: MouseEvent) {
       if (preference !== "allow" || !configured || !(event.target instanceof Element)) return;
-      const href = event.target.closest("a")?.getAttribute("href");
-      if (href?.startsWith("tel:")) tag("event", "contact_click", {send_to: measurementId, method: "phone"});
-      else if (href?.startsWith("mailto:")) tag("event", "contact_click", {send_to: measurementId, method: "email"});
+      const link = event.target.closest("a");
+      const href = link?.getAttribute("href");
+      const params = {send_to: measurementId, page_location: measuredLocation};
+      if (href?.startsWith("tel:")) tag("event", "contact_click", {...params, method: "phone"});
+      else if (href?.startsWith("mailto:")) tag("event", "contact_click", {...params, method: "email"});
+      else if (href?.startsWith("https://wa.me/14377752592")) {
+        const service = link?.dataset.enquiryService;
+        tag("event", "whatsapp_open", {...params, ...(service && /^[a-z-]{1,40}$/.test(service) ? {service} : {})});
+      }
     }
     document.addEventListener("click", click);
     return () => document.removeEventListener("click", click);
